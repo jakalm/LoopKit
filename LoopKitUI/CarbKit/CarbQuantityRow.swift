@@ -22,7 +22,8 @@ public struct CarbQuantityRow: View {
     private let formatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 1
+        formatter.maximumFractionDigits = 3
+        formatter.locale = Locale.current
         return formatter
     }()
     
@@ -39,7 +40,7 @@ public struct CarbQuantityRow: View {
                 .foregroundColor(.primary)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-            RowTextField(text: $carbInput, isFocused: $isFocused, maxLength: 5) {
+            RowTextField(text: $carbInput, isFocused: $isFocused, maxLength: 7) {
                 $0.textAlignment = .right
                 $0.keyboardType = .decimalPad
                 $0.placeholder = "0"
@@ -76,12 +77,18 @@ public struct CarbQuantityRow: View {
     
     // Update quantity based on text field input
     private func updateQuantity(with input: String) {
-        let filtered = input.filter { "0123456789.".contains($0) }
+        let decimalSeparator = formatter.decimalSeparator ?? "."
+        let allowedCharacters = "0123456789" + decimalSeparator
+        let filtered = input.filter { allowedCharacters.contains($0) }
+        if filtered != input {
+            self.carbInput = filtered
+        }
+
         if filtered != input {
             self.carbInput = filtered
         }
         
-        if let doubleValue = Double(filtered) {
+        if let doubleValue = formatter.number(from: filtered)?.doubleValue {
             quantity = doubleValue
         } else {
             quantity = nil
