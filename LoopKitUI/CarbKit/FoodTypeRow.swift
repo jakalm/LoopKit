@@ -17,6 +17,7 @@ public struct FoodTypeRow: View {
     @Binding private var absorptionTimeWasEdited: Bool
     @Binding private var isFocused: Bool
     
+    private var title: String
     private var defaultAbsorptionTimes: CarbStore.DefaultAbsorptionTimes
     private var orderedAbsorptionTimes: [TimeInterval] {
         [defaultAbsorptionTimes.fast, defaultAbsorptionTimes.medium, defaultAbsorptionTimes.slow]
@@ -27,7 +28,7 @@ public struct FoodTypeRow: View {
     @State private var selectedEmojiIndex = 1
     
     /// Contains emoji shortcuts, an emoji keyboard, and modifies absorption time to match emoji
-    public init(foodType: Binding<String>, absorptionTime: Binding<TimeInterval>, selectedDefaultAbsorptionTimeEmoji: Binding<String>, usesCustomFoodType: Binding<Bool>, absorptionTimeWasEdited: Binding<Bool>, isFocused: Binding<Bool>, defaultAbsorptionTimes: CarbStore.DefaultAbsorptionTimes) {
+    public init(foodType: Binding<String>, absorptionTime: Binding<TimeInterval>, selectedDefaultAbsorptionTimeEmoji: Binding<String>, usesCustomFoodType: Binding<Bool>, absorptionTimeWasEdited: Binding<Bool>, isFocused: Binding<Bool>, title: String, defaultAbsorptionTimes: CarbStore.DefaultAbsorptionTimes) {
         self._foodType = foodType
         self._absorptionTime = absorptionTime
         self._selectedDefaultAbsorptionTimeEmoji = selectedDefaultAbsorptionTimeEmoji
@@ -35,12 +36,13 @@ public struct FoodTypeRow: View {
         self._absorptionTimeWasEdited = absorptionTimeWasEdited
         self._isFocused = isFocused
         
+        self.title = title
         self.defaultAbsorptionTimes = defaultAbsorptionTimes
     }
     
     public var body: some View {
         HStack {
-            Text("Food Type")
+            Text(title)
                 .foregroundColor(.primary)
             
             Spacer()

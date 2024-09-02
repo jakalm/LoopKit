@@ -279,7 +279,7 @@ public extension HKUnit {
             if self == .hour() {
                 switch style {
                 case .short, .medium:
-                    return unitString
+                    return LocalizedString("hrs", comment: "The short unit display string for hours")
                 case .long:
                     fallthrough
                 @unknown default:

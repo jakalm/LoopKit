@@ -285,13 +285,13 @@ extension TherapySettingsView {
                 }
                 SectionDivider()
                 HStack {
-                    Text(NSLocalizedString("Total", comment: "The text indicating Total for Daily Schedule Basal"))
+                    Text(LocalizedString("Total", comment: "The text indicating Total for Daily Schedule Basal"))
                         .bold()
                         .foregroundColor(.primary)
                     Spacer()
                     Text(String(format: "%.2f ",total))
                         .foregroundColor(.primary) +
-                    Text(NSLocalizedString("U/day", comment: "The text indicating U/day for Daily Schedule Basal"))
+                    Text(LocalizedString("U/day", comment: "The text indicating U/day for Daily Schedule Basal"))
                         .foregroundColor(.secondary)
                 }
             }
@@ -411,7 +411,7 @@ extension TherapySettingsView {
         Section {
             NavigationLink(destination: DemoPlaceHolderView(appName: appName)) {
                 HStack {
-                    Text("Get help with Therapy Settings", comment: "Support button for Therapy Settings")
+                    Text(LocalizedString("Get help with Therapy Settings", comment: "Support button for Therapy Settings"))
                         .foregroundColor(.primary)
                     Spacer()
                     Disclosure()

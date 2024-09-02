@@ -19,6 +19,7 @@ public struct DatePickerRow: View {
     
     @Binding var isFocused: Bool
     
+    private let title: String
     private let maximumDate: Date
     private let minimumDate: Date
     
@@ -42,9 +43,10 @@ public struct DatePickerRow: View {
     
     private let timeStepSize: TimeInterval = .minutes(15)
     
-    public init(date: Binding<Date>, isFocused: Binding<Bool>, minimumDate: Date, maximumDate: Date) {
+    public init(date: Binding<Date>, isFocused: Binding<Bool>, title: String, minimumDate: Date, maximumDate: Date) {
         self._date = date
         self._isFocused = isFocused
+        self.title = title
         self.minimumDate = minimumDate
         self.maximumDate = maximumDate
     }
@@ -52,7 +54,7 @@ public struct DatePickerRow: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
-                Text("Time")
+                Text(title)
                     .foregroundColor(.primary)
                 
                 Spacer()

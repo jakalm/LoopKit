@@ -12,6 +12,7 @@ public struct AbsorptionTimePickerRow: View {
     @Binding private var absorptionTime: TimeInterval
     @Binding private var isFocused: Bool
     
+    private let title: String
     private let validDurationRange: ClosedRange<TimeInterval>
     private let minuteStride: Int
     
@@ -24,9 +25,10 @@ public struct AbsorptionTimePickerRow: View {
         return formatter
     }()
     
-    public init(absorptionTime: Binding<TimeInterval>, isFocused: Binding<Bool>, validDurationRange: ClosedRange<TimeInterval>, minuteStride: Int = 30, showHowAbsorptionTimeWorks: Binding<Bool>? = nil) {
+    public init(absorptionTime: Binding<TimeInterval>, isFocused: Binding<Bool>, title: String, validDurationRange: ClosedRange<TimeInterval>, minuteStride: Int = 30, showHowAbsorptionTimeWorks: Binding<Bool>? = nil) {
         self._absorptionTime = absorptionTime
         self._isFocused = isFocused
+        self.title = title
         self.validDurationRange = validDurationRange
         self.minuteStride = minuteStride
         self.showHowAbsorptionTimeWorks = showHowAbsorptionTimeWorks
@@ -35,7 +37,7 @@ public struct AbsorptionTimePickerRow: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
-                Text("Absorption Time")
+                Text(title)
                     .foregroundColor(.primary)
                 
                 if showHowAbsorptionTimeWorks != nil {

@@ -13,11 +13,21 @@
 /* Descriptive text for guardrail low value warning for schedule interface */
 "A value you have entered is lower than what is typically recommended for most people." = "Det värde du har angett är lägre än vad som normalt rekommenderas för de flesta.";
 
+/* Brand name for afrezza insulin type
+   Title for Afrezza insulin type */
+"Afrezza" = "Afrezza";
+
+/* Description for afrezza insulin type */
+"Afrezza is an ultra rapid-acting mealtime insulin that is breathed in through your lungs using an oral inhaler and made by MannKind" = "Afrezza är ett ultrasnabbverkande måltidsinsulin som inhaleras genom lungorna med hjälp av en oral inhalator och tillverkas av MannKind";
+
 /* Brand name for apidra insulin type */
 "Apidra" = "Apidra";
 
 /* Title for Apidra insulin type */
 "Apidra (insulin glulisine)" = "Apidra (insulinglulisin)";
+
+/* Description for apidra insulin type */
+"Apidra (insulin glulisine) is a rapid-acting insulin made by Sanofi-aventis " = "Apidra (insulin glulisine) är ett snabbverkande insulin tillverkat av Sanofi-aventis ";
 
 /* Title for basal dose type */
 "Basal" = "Basal";
@@ -52,11 +62,23 @@
 /* Descriptive text for glucose target range (1: app name) */
 "Correction Range is the glucose value (or range of values) that you want %1$@ to aim for in adjusting your basal insulin and helping you calculate your boluses." = "Målvärde är det ideala blodsockerintervall som du vill att %1$@ ska hålla dig inom.";
 
+/* Description of critical software update needed */
+"Critical Update" = "Kritisk uppdatering";
+
 /* Title text for delivery limits */
 "Delivery Limits" = "Maxdoser";
 
 /* Generic pump error description */
 "Device Refused" = "Enhet vägrade";
+
+/* Accessibility label for device status critical state */
+"Device Status Critical" = "Enhetens status: kritisk";
+
+/* Accessibility label for device status normal state */
+"Device Status Normal" = "Enhetens status: normal";
+
+/* Accessibility label for device status warning state */
+"Device Status Warning" = "Enhetens status: varning";
 
 /* Recovery suggestion for a no data error */
 "Ensure carb data exists for the specified date" = "Kontrollera att kolhydratvärde finns";
@@ -87,13 +109,25 @@
 "g/U" = "g/E";
 
 /* Title text for glucose safety limit */
-"Glucose Safety Limit" = "Tröskelvärde för blodsocker";
+"Glucose Safety Limit" = "Tröskelvärde\nför blodsocker";
+
+/* The long unit display string for a singular hour */
+"Hour" = "timme";
+
+/* The long unit display string for hours */
+"Hours" = "timmar";
+
+/* The short unit display string for hours */
+"hrs" = "tim";
 
 /* Brand name for humalog insulin type */
 "Humalog" = "Humalog";
 
 /* Title for Humalog insulin type */
 "Humalog (insulin lispro)" = "Humalog (insulin lispro)";
+
+/* Description for humalog insulin type */
+"Humalog (insulin lispro) is a rapid-acting insulin made by Eli Lilly" = "Humalog (insulin lispro) är ett snabbverkande insulin tillverkat av Eli Lilly";
 
 /* Title text for fast acting insulin model */
 "Insulin Model" = "Insulinmodell";
@@ -104,11 +138,21 @@
 /* Generic pump error description */
 "Invalid Configuration" = "Ogiltig konfiguration";
 
+/* Brand name for lyumjev insulin type
+   Title for Lyumjev insulin type */
+"Lyumjev" = "Lyumjev";
+
+/* Description for lyumjev insulin type */
+"Lyumjev is a mealtime insulin lispro formulation with the addition of citrate and treprostinil made by Eli Lilly" = "Lyumjev är en måltidsinsulin av insulin lispro med tillsats av citrat och treprostinil, tillverkat av Eli Lilly";
+
 /* Recovery suggestion for uncertain delivery */
 "Make sure your pump is within communication range of your phone." = "Säkerställ att din pump är inom räckvidd för kommunikation med telefon.";
 
 /* Title text for maximum basal rate configuration */
 "Maximum Basal Rate" = "Maximal basaldos";
+
+/* Descriptive text for maximum basal rate (1: app name) */
+"Maximum Basal Rate is the highest temporary basal rate %1$@ is allowed to set." = "Maximal basaldos är den högsta temporära basalen %1$@ har lov att genomföra.";
 
 /* Title text for maximum bolus configuration */
 "Maximum Bolus" = "Maximal bolus";
@@ -116,17 +160,26 @@
 /* Descriptive text for maximum bolus */
 "Maximum Bolus is the highest bolus amount you can deliver at one time to cover carbs or bring down high glucose." = "Maximal bolus är den högsta bolusmängd som kan ges vid ett tillfälle för att täcka kolhydrater eller ett högt blodsocker.";
 
+/* The short unit display string for milligrams per liter per minute */
+"mg/dL/min" = "mg/dL/min";
+
 /* The short unit display string for milligrams per deciliter per U */
 "mg/dL/U" = "mg/dl/E";
 
 /* The short unit display string for millimoles per liter */
 "mmol/L" = "mmol/L";
 
+/* The short unit display string for millimoles per liter per minute */
+"mmol/L/min" = "mmol/L/min";
+
 /* The short unit display string for millimoles per liter per U */
 "mmol/L/U" = "mmol/L/E";
 
 /* Sensor state description for the non-valid state */
 "Needs Attention" = "Kräver uppmärksamhet";
+
+/* Description of no software update needed */
+"No Update" = "Ingen uppdatering";
 
 /* Describes an error for no data found in a CarbStore request */
 "No values found" = "Inga värden funna";
@@ -137,6 +190,9 @@
 /* Title for Novolog insulin type */
 "Novolog (insulin aspart)" = "Novolog (insulin aspart)";
 
+/* Description for novolog insulin type */
+"NovoLog (insulin aspart) is a rapid-acting insulin made by Novo Nordisk" = "NovoLog (insulin aspart) är ett snabbverkande insulin tillverkat av Novo Nordisk";
+
 /* Sensor state description for the valid state */
 "OK" = "OK";
 
@@ -145,6 +201,9 @@
 
 /* Title for pre-meal mode */
 "Pre-Meal" = "Före måltid";
+
+/* Description of supported software update needed */
+"Recommended Update" = "Rekommenderad uppdatering";
 
 /* Title for resume dose type */
 "Resumed" = "Återupptagen";
@@ -203,6 +262,9 @@
 /* The long unit display string for international units of insulin per hour */
 "Units/hour" = "Enhet/timme";
 
+/* Description of informational software update needed */
+"Update Available" = "Uppdatering tillgänglig";
+
 /* Title for workout mode */
 "Workout" = "Träning";
 
@@ -214,4 +276,3 @@
 
 /* Descriptive text for insulin sensitivity */
 "Your Insulin Sensitivities refer to the drop in glucose expected from one unit of insulin." = "Insulinkänslighet är ett mått på hur mycket ditt blodsocker sänks av en enhet insulin.";
-
