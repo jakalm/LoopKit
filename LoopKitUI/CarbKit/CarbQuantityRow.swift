@@ -23,7 +23,7 @@ public struct CarbQuantityRow: View {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumIntegerDigits = 3
-        formatter.maximumFractionDigits = 1
+        formatter.maximumFractionDigits = 3
         return formatter
     }()
     
@@ -40,7 +40,7 @@ public struct CarbQuantityRow: View {
                 .foregroundColor(.primary)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-            RowTextField(text: $carbInput, isFocused: $isFocused, maxLength: 5) {
+            RowTextField(text: $carbInput, isFocused: $isFocused, maxLength: 7) {
                 $0.textAlignment = .right
                 $0.keyboardType = .decimalPad
                 $0.placeholder = "0"
