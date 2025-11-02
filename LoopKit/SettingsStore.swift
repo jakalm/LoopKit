@@ -53,7 +53,11 @@ public class SettingsStore {
 
                 do {
                     let stored = try self.store.managedObjectContext.fetch(storedRequest)
-                    self.latestSettings = stored.first.flatMap { self.decodeSettings(fromData: $0.data) }
+                    if let firstStored = stored.first {
+                        if let decoded = self.decodeSettings(fromData: firstStored.data) {
+                            self.latestSettings = decoded
+                        }
+                    }
                 } catch let error {
                     self.log.error("Error fetching latest settings: %@", String(describing: error))
                     return
@@ -291,6 +295,7 @@ public struct StoredSettings: Equatable {
     public let date: Date
     public var controllerTimeZone: TimeZone
     public let dosingEnabled: Bool
+    public let loopModeRawValue: Int?  // Store raw value instead of LoopMode to avoid module dependency
     public let glucoseTargetRangeSchedule: GlucoseRangeSchedule?
     public let preMealTargetRange: ClosedRange<HKQuantity>?
     public let workoutTargetRange: ClosedRange<HKQuantity>?
@@ -318,6 +323,7 @@ public struct StoredSettings: Equatable {
     public init(date: Date = Date(),
                 controllerTimeZone: TimeZone = TimeZone.current,
                 dosingEnabled: Bool = false,
+                loopModeRawValue: Int? = nil,
                 glucoseTargetRangeSchedule: GlucoseRangeSchedule? = nil,
                 preMealTargetRange: ClosedRange<HKQuantity>? = nil,
                 workoutTargetRange: ClosedRange<HKQuantity>? = nil,
@@ -343,6 +349,7 @@ public struct StoredSettings: Equatable {
         self.date = date
         self.controllerTimeZone = controllerTimeZone
         self.dosingEnabled = dosingEnabled
+        self.loopModeRawValue = loopModeRawValue
         self.glucoseTargetRangeSchedule = glucoseTargetRangeSchedule
         self.preMealTargetRange = preMealTargetRange
         self.workoutTargetRange = workoutTargetRange
@@ -374,9 +381,14 @@ extension StoredSettings: Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let bloodGlucoseUnit = HKUnit(from: try container.decode(String.self, forKey: .bloodGlucoseUnit))
+
+        let dosingEnabled = try container.decodeIfPresent(Bool.self, forKey: .dosingEnabled) ?? false
+        let loopModeRawValue = try container.decodeIfPresent(Int.self, forKey: .loopMode)
+
         self.init(date: try container.decode(Date.self, forKey: .date),
                   controllerTimeZone: try container.decode(TimeZone.self, forKey: .controllerTimeZone),
-                  dosingEnabled: try container.decode(Bool.self, forKey: .dosingEnabled),
+                  dosingEnabled: dosingEnabled,
+                  loopModeRawValue: loopModeRawValue,
                   glucoseTargetRangeSchedule: try container.decodeIfPresent(GlucoseRangeSchedule.self, forKey: .glucoseTargetRangeSchedule),
                   preMealTargetRange: try container.decodeIfPresent(DoubleRange.self, forKey: .preMealTargetRange)?.quantityRange(for: bloodGlucoseUnit),
                   workoutTargetRange: try container.decodeIfPresent(DoubleRange.self, forKey: .workoutTargetRange)?.quantityRange(for: bloodGlucoseUnit),
@@ -407,6 +419,7 @@ extension StoredSettings: Codable {
         try container.encode(date, forKey: .date)
         try container.encode(controllerTimeZone, forKey: .controllerTimeZone)
         try container.encode(dosingEnabled, forKey: .dosingEnabled)
+        try container.encodeIfPresent(loopModeRawValue, forKey: .loopMode)
         try container.encodeIfPresent(glucoseTargetRangeSchedule, forKey: .glucoseTargetRangeSchedule)
         try container.encodeIfPresent(preMealTargetRange?.doubleRange(for: bloodGlucoseUnit), forKey: .preMealTargetRange)
         try container.encodeIfPresent(workoutTargetRange?.doubleRange(for: bloodGlucoseUnit), forKey: .workoutTargetRange)
@@ -450,7 +463,8 @@ extension StoredSettings: Codable {
     private enum CodingKeys: String, CodingKey {
         case date
         case controllerTimeZone
-        case dosingEnabled
+        case dosingEnabled  // Legacy key for backward compatibility
+        case loopMode
         case glucoseTargetRangeSchedule
         case preMealTargetRange
         case workoutTargetRange
