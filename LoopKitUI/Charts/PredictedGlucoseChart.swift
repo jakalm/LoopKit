@@ -95,7 +95,7 @@ extension PredictedGlucoseChart {
         glucoseChartCache = nil
     }
 
-    public func generate(withFrame frame: CGRect, xAxisModel: ChartAxisModel, xAxisValues: [ChartAxisValue], axisLabelSettings: ChartLabelSettings, guideLinesLayerSettings: ChartGuideLinesLayerSettings, colors: ChartColorPalette, chartSettings: ChartSettings, labelsWidthY: CGFloat, gestureRecognizer: UIGestureRecognizer?, traitCollection: UITraitCollection) -> Chart
+    public func generate(withFrame frame: CGRect, xAxisModel: ChartAxisModel, xAxisValues: [ChartAxisValue], axisLabelSettings: ChartLabelSettings, guideLinesLayerSettings: ChartGuideLinesLayerSettings, colors: ChartColorPalette, chartSettings: ChartSettings, labelsWidthY: CGFloat, gestureRecognizer: UIGestureRecognizer?, traitCollection: UITraitCollection, highlightedTimeRange: (start: Date, end: Date)?) -> Chart
     {
         if targetGlucosePoints.isEmpty, xAxisValues.count > 1, let schedule = targetGlucoseSchedule {
 
@@ -170,6 +170,9 @@ extension PredictedGlucoseChart {
         // Grid lines
         let gridLayer = ChartGuideLinesForValuesLayer(xAxis: xAxisLayer.axis, yAxis: yAxisLayer.axis, settings: guideLinesLayerSettings, axisValuesX: Array(xAxisValues.dropFirst().dropLast()), axisValuesY: yAxisValues)
 
+        // Highlighted time range overlay
+        let highlightLayer = createHighlightLayer(xAxisLayer: xAxisLayer, yAxisLayer: yAxisLayer, highlightedTimeRange: highlightedTimeRange, innerFrame: innerFrame)
+
         let circles = ChartPointsScatterCirclesLayer(xAxis: xAxisLayer.axis, yAxis: yAxisLayer.axis, chartPoints: glucosePoints, displayDelay: 0, itemSize: CGSize(width: 4, height: 4), itemFillColor: colors.glucoseTint, optimized: true)
 
         var alternatePrediction: ChartLayer?
@@ -211,6 +214,7 @@ extension PredictedGlucoseChart {
             targetsLayer,
             xAxisLayer,
             yAxisLayer,
+            highlightLayer,
             glucoseChartCache?.highlightLayer,
             prediction,
             alternatePrediction,

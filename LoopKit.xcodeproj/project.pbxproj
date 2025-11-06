@@ -66,6 +66,7 @@
 		1DFFB988271740EE0075AEAA /* MockSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFFB987271740EE0075AEAA /* MockSupport.swift */; };
 		1F5DAB2D2118CE9300048054 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1F5DAB2B2118CE9300048054 /* Localizable.strings */; };
 		1FE58796211D12CE004F24ED /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7D68A9E31FE0A3D300522C49 /* Localizable.strings */; };
+		3669FE562EBCE760004B7ECE /* BasalRateChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3669FE552EBCE760004B7ECE /* BasalRateChart.swift */; };
 		430157FA1C7EC03B00B64B63 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430157F91C7EC03B00B64B63 /* AppDelegate.swift */; };
 		430157FC1C7EC03B00B64B63 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430157FB1C7EC03B00B64B63 /* MasterViewController.swift */; };
 		430158011C7EC03B00B64B63 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 430157FF1C7EC03B00B64B63 /* Main.storyboard */; };
@@ -1159,6 +1160,7 @@
 		1F5DAB7F2118F3FC00048054 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1FE58790211CFBB7004F24ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1FE58794211D0967004F24ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3669FE552EBCE760004B7ECE /* BasalRateChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasalRateChart.swift; sourceTree = "<group>"; };
 		430157F71C7EC03B00B64B63 /* LoopKit Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LoopKit Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		430157F91C7EC03B00B64B63 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		430157FB1C7EC03B00B64B63 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MasterViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -3315,6 +3317,7 @@
 		E9086B4324B53CB40062F5C8 /* Charts */ = {
 			isa = PBXGroup;
 			children = (
+				3669FE552EBCE760004B7ECE /* BasalRateChart.swift */,
 				A9D3FEFB2A6C1943000C891D /* CarbEffectChart.swift */,
 				A9D3FEFA2A6C1943000C891D /* ChartConstants.swift */,
 				A9D3FEFC2A6C1943000C891D /* COBChart.swift */,
@@ -4129,6 +4132,7 @@
 				A9CFCAA52582FA0400A04932 /* SupportUI.swift in Sources */,
 				89AC9DCD24529D9B004A6B8A /* TimePicker.swift in Sources */,
 				A9498D8B23386CC700DAA9B9 /* ServiceUI.swift in Sources */,
+				3669FE562EBCE760004B7ECE /* BasalRateChart.swift in Sources */,
 				E96175AE24B7BE38008E5080 /* Dictionary.swift in Sources */,
 				1D096C0524C624F70078B6B5 /* InsulinModelSettings+LoopKitUI.swift in Sources */,
 				892A5DB82231E1A0008961AB /* ReservoirVolumeHUDView.swift in Sources */,

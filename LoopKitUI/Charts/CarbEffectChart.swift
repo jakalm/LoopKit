@@ -48,7 +48,7 @@ extension CarbEffectChart {
         carbEffectChartCache = nil
     }
 
-    public func generate(withFrame frame: CGRect, xAxisModel: ChartAxisModel, xAxisValues: [ChartAxisValue], axisLabelSettings: ChartLabelSettings, guideLinesLayerSettings: ChartGuideLinesLayerSettings, colors: ChartColorPalette, chartSettings: ChartSettings, labelsWidthY: CGFloat, gestureRecognizer: UIGestureRecognizer?, traitCollection: UITraitCollection) -> Chart
+    public func generate(withFrame frame: CGRect, xAxisModel: ChartAxisModel, xAxisValues: [ChartAxisValue], axisLabelSettings: ChartLabelSettings, guideLinesLayerSettings: ChartGuideLinesLayerSettings, colors: ChartColorPalette, chartSettings: ChartSettings, labelsWidthY: CGFloat, gestureRecognizer: UIGestureRecognizer?, traitCollection: UITraitCollection, highlightedTimeRange: (start: Date, end: Date)?) -> Chart
     {
         /// The minimum range to display for carb effect values.
         let carbEffectDisplayRangePoints: [ChartPoint] = [0, glucoseUnit.chartableIncrement].map {
@@ -104,6 +104,9 @@ extension CarbEffectChart {
             axisValuesY: yAxisValues
         )
 
+        // Highlighted time range overlay
+        let highlightLayer = createHighlightLayer(xAxisLayer: xAxisLayer, yAxisLayer: yAxisLayer, highlightedTimeRange: highlightedTimeRange, innerFrame: innerFrame)
+
         // 0-line
         let dummyZeroChartPoint = ChartPoint(x: ChartAxisValueDouble(0), y: ChartAxisValueDouble(0))
         let zeroGuidelineLayer = ChartPointsViewsLayer(xAxis: xAxisLayer.axis, yAxis: yAxisLayer.axis, chartPoints: [dummyZeroChartPoint], viewGenerator: {(chartPointModel, layer, chart) -> UIView? in
@@ -130,6 +133,7 @@ extension CarbEffectChart {
             gridLayer,
             xAxisLayer,
             yAxisLayer,
+            highlightLayer,
             zeroGuidelineLayer,
             carbEffectChartCache?.highlightLayer,
             effectsLayer

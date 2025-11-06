@@ -44,7 +44,7 @@ public extension COBChart {
         cobChartCache = nil
     }
 
-    func generate(withFrame frame: CGRect, xAxisModel: ChartAxisModel, xAxisValues: [ChartAxisValue], axisLabelSettings: ChartLabelSettings, guideLinesLayerSettings: ChartGuideLinesLayerSettings, colors: ChartColorPalette, chartSettings: ChartSettings, labelsWidthY: CGFloat, gestureRecognizer: UIGestureRecognizer?, traitCollection: UITraitCollection) -> Chart
+    func generate(withFrame frame: CGRect, xAxisModel: ChartAxisModel, xAxisValues: [ChartAxisValue], axisLabelSettings: ChartLabelSettings, guideLinesLayerSettings: ChartGuideLinesLayerSettings, colors: ChartColorPalette, chartSettings: ChartSettings, labelsWidthY: CGFloat, gestureRecognizer: UIGestureRecognizer?, traitCollection: UITraitCollection, highlightedTimeRange: (start: Date, end: Date)?) -> Chart
     {
         let yAxisValues = ChartAxisValuesStaticGenerator.generateYAxisValuesWithChartPoints(cobPoints + cobDisplayRangePoints, minSegmentCount: 2, maxSegmentCount: 3, multiple: 10, axisValueGenerator: { ChartAxisValueDouble($0, labelSettings: axisLabelSettings) }, addPaddingSegmentIfEdge: false)
 
@@ -63,6 +63,9 @@ public extension COBChart {
         // Grid lines
         let gridLayer = ChartGuideLinesForValuesLayer(xAxis: xAxisLayer.axis, yAxis: yAxisLayer.axis, settings: guideLinesLayerSettings, axisValuesX: Array(xAxisValues.dropFirst().dropLast()), axisValuesY: yAxisValues)
 
+        // Highlighted time range overlay
+        let highlightLayer = createHighlightLayer(xAxisLayer: xAxisLayer, yAxisLayer: yAxisLayer, highlightedTimeRange: highlightedTimeRange, innerFrame: innerFrame)
+
         if gestureRecognizer != nil {
             cobChartCache = ChartPointsTouchHighlightLayerViewCache(
                 xAxisLayer: xAxisLayer,
@@ -78,6 +81,7 @@ public extension COBChart {
             gridLayer,
             xAxisLayer,
             yAxisLayer,
+            highlightLayer,
             cobChartCache?.highlightLayer,
             cobArea,
             cobLine

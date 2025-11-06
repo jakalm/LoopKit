@@ -44,7 +44,7 @@ extension InsulinModelChart {
 
     }
 
-    public func generate(withFrame frame: CGRect, xAxisModel: ChartAxisModel, xAxisValues: [ChartAxisValue], axisLabelSettings: ChartLabelSettings, guideLinesLayerSettings: ChartGuideLinesLayerSettings, colors: ChartColorPalette, chartSettings: ChartSettings, labelsWidthY: CGFloat, gestureRecognizer: UIGestureRecognizer?, traitCollection: UITraitCollection) -> Chart
+    public func generate(withFrame frame: CGRect, xAxisModel: ChartAxisModel, xAxisValues: [ChartAxisValue], axisLabelSettings: ChartLabelSettings, guideLinesLayerSettings: ChartGuideLinesLayerSettings, colors: ChartColorPalette, chartSettings: ChartSettings, labelsWidthY: CGFloat, gestureRecognizer: UIGestureRecognizer?, traitCollection: UITraitCollection, highlightedTimeRange: (start: Date, end: Date)?) -> Chart
     {
         let yAxisValues = ChartAxisValuesStaticGenerator.generateYAxisValuesWithChartPoints(glucoseDisplayRangePoints,
             minSegmentCount: 2,
@@ -73,6 +73,9 @@ extension InsulinModelChart {
             axisValuesX: Array(xAxisValues.dropFirst().dropLast()),
             axisValuesY: yAxisValues
         )
+
+        // Highlighted time range overlay
+        let highlightLayer = createHighlightLayer(xAxisLayer: coordsSpace.xAxisLayer, yAxisLayer: coordsSpace.yAxisLayer, highlightedTimeRange: highlightedTimeRange, innerFrame: coordsSpace.chartInnerFrame)
 
         // Selected line
         var selectedLayer: ChartLayer?
@@ -116,6 +119,7 @@ extension InsulinModelChart {
             gridLayer,
             coordsSpace.xAxisLayer,
             coordsSpace.yAxisLayer,
+            highlightLayer,
             unselectedLayer,
             selectedLayer
         ]

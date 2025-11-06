@@ -73,6 +73,8 @@ open class ChartsManager {
 
     public var gestureRecognizer: UIGestureRecognizer?
 
+    public var highlightedTimeRange: (start: Date, end: Date)?
+
     // MARK: - UITraitEnvironment
 
     public var traitCollection: UITraitCollection
@@ -162,7 +164,7 @@ open class ChartsManager {
         }
 
         if chartsCache[index] == nil, let xAxisModel = xAxisModel, let xAxisValues = xAxisValues {
-            chartsCache[index] = charts[index].generate(withFrame: frame, xAxisModel: xAxisModel, xAxisValues: xAxisValues, axisLabelSettings: axisLabelSettings, guideLinesLayerSettings: guideLinesLayerSettings, colors: colors, chartSettings: chartSettings, labelsWidthY: labelsWidthY, gestureRecognizer: gestureRecognizer, traitCollection: traitCollection)
+            chartsCache[index] = charts[index].generate(withFrame: frame, xAxisModel: xAxisModel, xAxisValues: xAxisValues, axisLabelSettings: axisLabelSettings, guideLinesLayerSettings: guideLinesLayerSettings, colors: colors, chartSettings: chartSettings, labelsWidthY: labelsWidthY, gestureRecognizer: gestureRecognizer, traitCollection: traitCollection, highlightedTimeRange: highlightedTimeRange)
         }
 
         return chartsCache[index]
@@ -244,6 +246,66 @@ public protocol ChartProviding {
         chartSettings: ChartSettings,
         labelsWidthY: CGFloat,
         gestureRecognizer: UIGestureRecognizer?,
-        traitCollection: UITraitCollection
+        traitCollection: UITraitCollection,
+        highlightedTimeRange: (start: Date, end: Date)?
     ) -> Chart
+}
+
+// MARK: - Highlighted Time Range Helper
+
+extension ChartProviding {
+    func createHighlightLayer(
+        xAxisLayer: ChartAxisLayer,
+        yAxisLayer: ChartAxisLayer,
+        highlightedTimeRange: (start: Date, end: Date)?,
+        innerFrame: CGRect
+    ) -> ChartLayer? {
+        guard let timeRange = highlightedTimeRange else {
+            return nil
+        }
+
+        // Create chart points for the start and end of the highlighted range
+        // Use the same date formatter used by the chart
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .none
+        dateFormatter.timeStyle = .short
+
+        let startPoint = ChartPoint(x: ChartAxisValueDate(date: timeRange.start, formatter: dateFormatter), y: ChartAxisValueDouble(0))
+        let endPoint = ChartPoint(x: ChartAxisValueDate(date: timeRange.end, formatter: dateFormatter), y: ChartAxisValueDouble(0))
+
+        return ChartPointsViewsLayer(xAxis: xAxisLayer.axis, yAxis: yAxisLayer.axis, chartPoints: [startPoint, endPoint], viewGenerator: { (chartPointModel, layer, chart) -> UIView? in
+            // Only create the overlay view once for the first point
+            guard chartPointModel.index == 0 else { return nil }
+
+            // Get the screen location for the start point (current chartPointModel)
+            let startX = chartPointModel.screenLoc.x
+
+            // We need to manually calculate the end X position
+            // Find the chart point model for the end point
+            guard let endPointModel = layer.chartPointsModels.first(where: { $0.index == 1 }) else {
+                return nil
+            }
+            let endX = endPointModel.screenLoc.x
+
+            // Use the chart's content view bounds for full height coverage
+            let contentBounds = chart.contentView.bounds
+            let overlayView = UIView(frame: CGRect(x: startX, y: contentBounds.minY, width: endX - startX, height: contentBounds.height))
+            overlayView.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.15)
+            overlayView.isUserInteractionEnabled = false
+
+            // Add left border
+            let leftBorder = CALayer()
+            leftBorder.frame = CGRect(x: 0, y: 0, width: 2, height: overlayView.bounds.height)
+            leftBorder.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.6).cgColor
+            overlayView.layer.addSublayer(leftBorder)
+
+            // Add right border
+            let rightBorder = CALayer()
+            rightBorder.frame = CGRect(x: overlayView.bounds.width - 2, y: 0, width: 2, height: overlayView.bounds.height)
+            rightBorder.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.6).cgColor
+            overlayView.layer.addSublayer(rightBorder)
+
+            return overlayView
+        })
+    }
 }
