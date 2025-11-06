@@ -16,6 +16,11 @@ import UIKit
 open class ChartsManager {
 
     private lazy var timeFormatter: DateFormatter = {
+        // Use custom formatter if provided, otherwise use default
+        if let customFormatter = self.customTimeFormatter {
+            return customFormatter
+        }
+
         let formatter = DateFormatter()
         let dateFormat = DateFormatter.dateFormat(fromTemplate: "j", options: 0, locale: Locale.current)!
         let isAmPmTimeFormat = dateFormat.firstIndex(of: "a") != nil
@@ -25,18 +30,22 @@ open class ChartsManager {
         return formatter
     }()
 
+    private let customTimeFormatter: DateFormatter?
+
     public init(
         colors: ChartColorPalette,
         settings: ChartSettings,
         axisLabelFont: UIFont = .systemFont(ofSize: 14), // caption1, but hard-coded until axis can scale with type preference
         charts: [ChartProviding],
-        traitCollection: UITraitCollection
+        traitCollection: UITraitCollection,
+        customTimeFormatter: DateFormatter? = nil
     ) {
         self.colors = colors
         self.chartSettings = settings
         self.charts = charts
         self.traitCollection = traitCollection
         self.chartsCache = Array(repeating: nil, count: charts.count)
+        self.customTimeFormatter = customTimeFormatter
 
         axisLabelSettings = ChartLabelSettings(font: axisLabelFont, fontColor: colors.axisLabel)
 
